@@ -120,8 +120,10 @@ impl<'a> FuturesWebSockets<'a> {
     pub fn connect_with_config(
         &mut self, market: &FuturesMarket, subscription: &'a str, config: &'a Config,
     ) -> Result<()> {
+        // TODO support another market other than USDM
+        let url = format!("{}/ws/{}", config.futures_ws_endpoint.clone(), subscription);
         self.connect_wss(
-            &FuturesWebsocketAPI::Custom(config.futures_ws_endpoint.clone()).params(market, subscription),
+            &FuturesWebsocketAPI::Custom(url),
         )
     }
 
